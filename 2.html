@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue.js Example</title>
+</head>
+
+<body>
+  <main id="app">
+    <div>
+      <label for="City">Город
+        <select name="City" type="text" id="select" v-model="selectedCity" @change="updateWorkshops">
+          <option v-for="(city, index) in cities" :key="index" :value="city">{{ city }}</option>
+        </select><br>
+      </label>
+      <label for="Workshop">Цех
+        <select name="Workshop" type="text" id="select" v-model="selectedWorkshop" @change="updateEmployees">
+          <option v-for="(workshop, index) in workshops" :key="index" :value="workshop">{{ workshop }}</option>
+        </select><br>
+      </label>
+      <label for="Employee">Сотрудник
+        <select name="Employee" type="text" id="select" v-model="selectedEmployee">
+          <option v-for="(employee, index) in employees" :key="index" :value="employee">{{ employee }}</option>
+        </select><br>
+      </label>
+      <label for="Brigade">Бригада
+        <select name="Brigade" type="text" id="select" v-model="selectedBrigade">
+          <option v-for="(brigade, index) in brigades" :key="index" :value="brigade">{{ brigade }}</option>
+        </select><br>
+      </label>
+      <label for="Shift">Смена
+        <select name="Shift" type="text" id="select" v-model="selectedShift">
+          <option v-for="(shift, index) in shifts" :key="index" :value="shift">{{ shift }}</option>
+        </select><br>
+      </label>
+      <button class="button" @click="saveValues">Сохранить</button>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        selectedCity: '',
+        selectedWorkshop: '',
+        selectedEmployee: '',
+        selectedBrigade: '',
+        selectedShift: '',
+        cities: ['Город 1', 'Город 2'],
+        workshops: {},
+        employees: {},
+        brigades: ['Бригада 1', 'Бригада 2'],
+        shifts: ['Смена 1', 'Смена 2']
+      },
+      methods: {
+        updateWorkshops() {
+          this.selectedWorkshop = '';
+          this.selectedEmployee = '';
+          this.selectedBrigade = '';
+          this.selectedShift = '';
+          this.workshops = {};
+          if (this.selectedCity === 'Город 1') {
+            this.workshops = ['Цех 1', 'Цех 2'];
+          }
+          if (this.selectedCity === 'Город 2') {
+            this.workshops = ['Цех 3', 'Цех 4'];
+          }
+        },
+        updateEmployees() {
+          this.selectedEmployee = '';
+          this.selectedBrigade = '';
+          this.selectedShift = '';
+          this.employees = {};
+          if (this.selectedWorkshop === 'Цех 1') {
+            this.employees = ['Сотрудник 1', 'Сотрудник 2'];
+          }
+          if (this.selectedWorkshop === 'Цех 2') {
+            this.employees = ['Сотрудник 3', 'Сотрудник 4'];
+          }
+          if (this.selectedWorkshop === 'Цех 3') {
+            this.employees = ['Сотрудник 5', 'Сотрудник 6'];
+          }
+          if (this.selectedWorkshop === 'Цех 4') {
+            this.employees = ['Сотрудник 7', 'Сотрудник 8'];
+          }
+        },
+        saveValues() {
+
+          document.cookie = 'City=' + encodeURIComponent(this.selectedCity);
+          document.cookie = 'Workshop=' + encodeURIComponent(this.selectedWorkshop);
+          document.cookie = 'Employee=' + encodeURIComponent(this.selectedEmployee);
+          document.cookie = 'Brigade=' + encodeURIComponent(this.selectedBrigade);
+          document.cookie = 'Shift=' + encodeURIComponent(this.selectedShift);
+
+          console.log("Куки=", document.cookie);
+
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
